@@ -17,20 +17,25 @@ flowchart TD
     B --> Q[Proximity Service<br/>opt-in, coarse location only]
     B --> R[Chat Service<br/>Socket.IO, mutual-accept only]
     B --> S[Chatbot/Voice Service<br/>LLM + Web Speech API]
+    B --> U[Moderation Service<br/>OpenAI Moderation API + human queue]
     C --> I[(MongoDB Atlas)]
     D --> I
     E --> I
     F --> I
     P --> I
     Q --> I
+    U --> I
     R --> T[(Redis - active session state)]
     D --> J[OpenAI/Claude API]
     S --> J
+    U --> J
     B --> K[Google Maps/Places API]
     F --> L[Synthetic crowd dataset]
     G --> M[Public news/dataset feed - labeled simulated]
-    P --> N[Cloudinary - photo storage]
+    P --> N[Cloudinary - photo + video storage]
 ```
+
+See also [threat-model.md](./threat-model.md) for the security reasoning behind the proximity and moderation services specifically.
 
 ## Non-Negotiable Safety Design (Proximity Feature)
 

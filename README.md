@@ -22,11 +22,13 @@ This project is explicit about what's genuinely integrated vs. what stands in fo
 
 | Component | Status |
 |---|---|
-| Google Maps/Places, LLM APIs, Razorpay (sandbox), Cloudinary | **Real, self-serve integrations** |
+| Google Maps/Places, LLM APIs, Razorpay (sandbox), Cloudinary (photo + video) | **Real, self-serve integrations** |
+| Content moderation | **Real** — OpenAI Moderation API + human-review queue (see [`docs/threat-model.md`](docs/threat-model.md)) |
 | Crowd prediction model | **Real trained model**, on synthetic data calibrated to public footfall figures |
 | Safety/scam alerts | Public data/news feed, **labeled simulated** stand-in for an official integration |
 | NDTM / IRCTC government APIs | **Not integrated** — no public developer access exists for either; designed-for only |
 | UPI/payments | **Sandbox/test mode only** — no real merchant KYC |
+| Temple crowd-data partnership | **Genuine outreach attempted** (see [`docs/research/partnership-outreach-log.md`](docs/research/partnership-outreach-log.md)) — outcome logged honestly either way; synthetic data ships regardless |
 
 ## Non-Negotiable: Proximity Feature Safety
 
@@ -77,26 +79,33 @@ cd ../frontend && npm install
 
 ## Roadmap
 
+*(v3 — full-year scope with explicit buffer weeks; see [`docs/PDD.md` §13](docs/PDD.md#13-project-timeline-and-milestones-full-year-v3) for reasoning)*
+
 | Milestone | Status |
 |---|---|
-| M0 — Research & PDD | ✅ Complete |
-| M1 — Environment & repo | ⬜ In progress |
+| M0 — Research & PDD | ✅ Complete (v3) |
+| M1 — Environment & repo | ✅ Complete |
 | M2 — Backend core | ⬜ Planned |
 | M3 — Frontend core | ⬜ Planned |
 | M4 — Maps integration | ⬜ Planned |
 | M5 — AI itinerary generation | ⬜ Planned |
 | M6 — Recommender | ⬜ Planned |
 | M7 — Crowd prediction model | ⬜ Planned |
+| *Buffer after M7* | ⬜ Planned |
 | M8 — Multilingual chatbot + voice | ⬜ Planned |
+| *Buffer after M8* | ⬜ Planned |
 | M9 — Creator profiles & follow | ⬜ Planned |
-| M10 — Blog posts + state zones | ⬜ Planned |
+| M10 — Blog/photo/video posts + zones | ⬜ Planned |
 | M11 — Reaction system | ⬜ Planned |
 | M12 — Real-time proximity + chat (safety-first) | ⬜ Planned |
+| *Buffer after M12* | ⬜ Planned |
 | M13 — Sponsored posts + payments | ⬜ Planned |
-| M14 — Testing, docs, deployment | ⬜ Planned |
-| M15 — Publication & interview prep | ⬜ Planned |
+| M14 — Real content moderation | ⬜ Planned |
+| M15 — Beta testing & iteration | ⬜ Planned |
+| M16 — Testing, docs, deployment | ⬜ Planned |
+| M17 — Publication & interview prep | ⬜ Planned |
 
-Full milestone breakdown: [`docs/PDD.md` §10](docs/PDD.md#10-project-timeline-and-milestones-full-v2).
+**35 of 52 available weeks scheduled** — the rest is intentional slack, not padding. Parallel, non-blocking: temple-partnership outreach (see [`docs/research/partnership-outreach-log.md`](docs/research/partnership-outreach-log.md)).
 
 ## License
 
