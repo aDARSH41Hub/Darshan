@@ -1,0 +1,40 @@
+# --- Node ---
+node_modules/
+npm-debug.log*
+.npm/
+
+# --- Build output ---
+frontend/build/
+frontend/dist/
+backend/dist/
+
+# --- Environment / secrets ---
+.env
+.env.local
+*.key
+
+# --- Python (ml/) ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- ML artifacts ---
+ml/crowd_model/*.pt
+ml/crowd_model/*.pkl
+ml/crowd_model/data/*
+!ml/crowd_model/data/.gitkeep
+
+# --- OS / editor ---
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# --- Test / coverage ---
+coverage/
+.nyc_output/
+
+# --- Logs ---
+*.log
+logs/
