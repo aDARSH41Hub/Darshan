@@ -8,7 +8,7 @@
 
 const express = require("express");
 const cors = require("cors");
-
+const authRoutes = require("./routes/auth");
 function createApp() {
   const app = express();
   app.use(cors());
@@ -17,8 +17,9 @@ function createApp() {
   app.get("/health", (req, res) => {
     res.status(200).json({ status: "ok", service: "darshan-api" });
   });
-
-  // TODO (M2): mount routes/auth, routes/places, routes/itinerary
+  //M2
+  app.use("/auth", authRoutes);
+  // TODO (M2): mount routes/places, routes/itinerary
   // TODO (M9): mount routes/social (profiles, follow)
   // TODO (M10): mount routes/posts (blog + photo, zone tagging)
   // TODO (M12): mount Socket.IO proximity + chat handlers (see PDD NFR7-10
