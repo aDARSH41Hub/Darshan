@@ -9,6 +9,8 @@ const requireEnv = (key) => {
   return value;
 };
 
+
+
 const generateAccessToken = (payload) => {
   const secret = requireEnv("JWT_ACCESS_SECRET");
   const expiresIn = process.env.JWT_ACCESS_EXPIRES_IN || "15m";
