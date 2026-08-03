@@ -8,7 +8,7 @@ const {
   signupRules,
   loginRules,
   handleValidationErrors,
-} = require('../validators/authValidator');
+} = require('../validators/authValidator').default;
 
 router.post('/signup', authLimiter, signupRules, handleValidationErrors, signup);
 router.post('/login', authLimiter, loginRules, handleValidationErrors, login);

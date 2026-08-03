@@ -1,6 +1,6 @@
 // backend/src/validators/authValidator.js
-const { body, validationResult } = require('express-validator');
-const ApiError = require('../utils/ApiError');
+import { body, validationResult } from 'express-validator';
+import ApiError from '../utils/ApiError';
 
 const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
@@ -41,7 +41,7 @@ const loginRules = [
   body('password').notEmpty().withMessage('Password is required'),
 ];
 
-module.exports = {
+export default {
   signupRules,
   loginRules,
   handleValidationErrors,
