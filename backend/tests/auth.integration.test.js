@@ -1,10 +1,10 @@
 // backend/tests/auth.integration.test.js
-import request from 'supertest';
-import { connect, disconnect } from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import { createApp } from '../src/app';
-import { deleteMany } from '../src/models/User';
-import { deleteMany as _deleteMany } from '../src/models/RefreshToken';
+const request = require('supertest');
+const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
+const { createApp } = require('../src/app');
+const User = require('../src/models/User');
+const RefreshToken = require('../src/models/RefreshToken');
 
 jest.setTimeout(30000);
 
@@ -14,20 +14,20 @@ let mongoServer;
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
   const uri = mongoServer.getUri();
-  await connect(uri);
+  await mongoose.connect(uri);
   app = createApp();
 });
 
 afterAll(async () => {
-  await disconnect();
+  await mongoose.disconnect();
   if (mongoServer) {
     await mongoServer.stop();
   }
 });
 
 beforeEach(async () => {
-  await deleteMany({});
-  await _deleteMany({});
+  await User.deleteMany({});
+  await RefreshToken.deleteMany({});
 });
 
 describe('POST /api/auth/signup', () => {
