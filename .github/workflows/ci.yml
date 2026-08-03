@@ -1,3 +1,4 @@
+
 name: CI
 
 on:
@@ -24,6 +25,10 @@ jobs:
           --health-retries 5
     env:
       TEST_MONGO_URI: mongodb://127.0.0.1:27017/darshan_test
+      JWT_ACCESS_SECRET: ci-access-secret
+      JWT_REFRESH_SECRET: ci-refresh-secret
+      JWT_ACCESS_EXPIRES_IN: 15m
+      JWT_REFRESH_EXPIRES_IN: 7d
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
