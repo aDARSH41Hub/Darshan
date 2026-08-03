@@ -1,25 +1,33 @@
-/**
- * Darshan frontend — root App component.
- *
- * Structural stub only — per project rules, real implementation happens
- * milestone-by-milestone, not copy-pasted wholesale.
- *
- * Planned routes (M3+):
- *   /            → Home / search
- *   /place/:id   → Place detail
- *   /itinerary   → Itinerary planner
- *   /profile/:id → Creator profile (M9)
- *   /feed/:zone  → State-zone content feed (M10)
- *   /nearby      → Proximity matching (M12 — safety requirements in PDD NFR7-10)
- */
+// frontend/src/App.jsx
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
-function App() {
-  return (
-    <div>
-      <h1>Darshan</h1>
-      <p>Scaffold — implementation begins at Milestone 3.</p>
-    </div>
-  );
+// TODO: build Dashboard, Profile pages in next session
+function Dashboard() {
+  return <div className="p-8">Dashboard (coming in next session)</div>;
 }
 
-export default App;
+export default function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
+}
