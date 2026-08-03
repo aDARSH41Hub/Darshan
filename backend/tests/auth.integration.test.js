@@ -11,10 +11,20 @@ jest.setTimeout(30000);
 let app;
 let mongoServer;
 
-beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  const uri = mongoServer.getUri();
+const connectToTestDb = async () => {
+  if (process.env.TEST_MONGO_URI) {
+    await mongoose.connect(process.env.TEST_MONGO_URI);
+    return null;
+  }
+
+  const server = await MongoMemoryServer.create();
+  const uri = server.getUri();
   await mongoose.connect(uri);
+  return server;
+};
+
+beforeAll(async () => {
+  mongoServer = await connectToTestDb();
   app = createApp();
 });
 
