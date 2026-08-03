@@ -97,6 +97,39 @@ describe('POST /api/auth/login', () => {
   });
 });
 
+describe('GET /api/users/:userId', () => {
+  let token;
+
+  beforeEach(async () => {
+    const signupRes = await request(app).post('/api/auth/signup').send({
+      name: 'Amit',
+      email: 'amit@example.com',
+      password: 'SecurePass123',
+    });
+    token = signupRes.body.data.accessToken;
+  });
+
+  it('should return 400 for invalid user ID format', async () => {
+    const res = await request(app)
+      .get('/api/users/invalid-id')
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.status).toBe(400);
+    expect(res.body.message).toMatch(/Invalid user ID format/i);
+  });
+
+  it('should return 404 for non-existent user', async () => {
+    const fakeUserId = new mongoose.Types.ObjectId().toString();
+
+    const res = await request(app)
+      .get(`/api/users/${fakeUserId}`)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.status).toBe(404);
+    expect(res.body.message).toMatch(/User not found/i);
+  });
+});
+
 describe('POST /api/auth/refresh', () => {
   it('should rotate refresh token', async () => {
     const signupRes = await request(app).post('/api/auth/signup').send({
