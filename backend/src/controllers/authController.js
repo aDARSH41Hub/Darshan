@@ -46,9 +46,17 @@ const signup = asyncHandler(async (req, res) => {
 
   const { accessToken, refreshToken } = createTokenPair(user);
 
-  const refreshExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  await tokenService.storeRefreshToken(user._id, refreshToken, refreshExpires);
+  // tokens created
 
+  const refreshExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  try {
+    await tokenService.storeRefreshToken(user._id, refreshToken, refreshExpires);
+  } catch (err) {
+    console.error('[AUTH DEBUG] failed to store refresh token', err && err.message);
+    throw err;
+  }
+
+  // set cookie last so response contains the header
   res.cookie('refreshToken', refreshToken, refreshCookieOptions);
 
   return res.status(201).json(
@@ -88,8 +96,15 @@ const login = asyncHandler(async (req, res) => {
 
   const { accessToken, refreshToken } = createTokenPair(user);
 
+  // tokens created on login
+
   const refreshExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  await tokenService.storeRefreshToken(user._id, refreshToken, refreshExpires);
+  try {
+    await tokenService.storeRefreshToken(user._id, refreshToken, refreshExpires);
+  } catch (err) {
+    console.error('[AUTH DEBUG] failed to store refresh token on login', err && err.message);
+    throw err;
+  }
 
   res.cookie('refreshToken', refreshToken, refreshCookieOptions);
 

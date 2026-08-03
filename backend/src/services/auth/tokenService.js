@@ -24,6 +24,7 @@ const revokeRefreshToken = async (token) => {
     { tokenHash: hashToken(token) },
     { $set: { replacedByToken: 'revoked-manual' } }
   );
+  
 };
 
 const isTokenRevoked = async (token) => {
@@ -42,6 +43,7 @@ const rotateRefreshToken = async (oldToken, userId) => {
     { tokenHash: hashToken(oldToken) },
     { $set: { replacedByToken: hashToken(newRefreshToken) } }
   );
+  
 
   // compute expiry from env (e.g., "7d" -> Date)
   const expiresInMs = parseDuration(process.env.JWT_REFRESH_EXPIRES_IN || '7d');

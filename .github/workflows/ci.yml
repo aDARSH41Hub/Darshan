@@ -12,6 +12,18 @@ jobs:
     defaults:
       run:
         working-directory: backend
+    services:
+      mongo:
+        image: mongo:6.0
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.adminCommand(\"ping\")'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      TEST_MONGO_URI: mongodb://127.0.0.1:27017/darshan_test
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -19,7 +31,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "npm"
           cache-dependency-path: backend/package-lock.json
 

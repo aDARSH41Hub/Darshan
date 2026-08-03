@@ -5,6 +5,7 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 const { createApp } = require('../src/app');
 const User = require('../src/models/User');
 const RefreshToken = require('../src/models/RefreshToken');
+// Note: tests assert cookie presence; rate limiter is skipped during tests
 
 jest.setTimeout(30000);
 
@@ -148,7 +149,9 @@ describe('POST /api/auth/refresh', () => {
       password: 'SecurePass123',
     });
 
-    const cookie = signupRes.headers['set-cookie'];
+    let cookie = signupRes.headers['set-cookie'];
+    expect(cookie).toBeDefined();
+    if (Array.isArray(cookie)) cookie = cookie.join('; ');
     const res = await request(app)
       .post('/api/auth/refresh')
       .set('Cookie', cookie);
@@ -166,7 +169,9 @@ describe('POST /api/auth/refresh', () => {
       password: 'SecurePass123',
     });
 
-    const oldCookie = signupRes.headers['set-cookie'];
+    let oldCookie = signupRes.headers['set-cookie'];
+    expect(oldCookie).toBeDefined();
+    if (Array.isArray(oldCookie)) oldCookie = oldCookie.join('; ');
 
     // first refresh — rotates token
     await request(app).post('/api/auth/refresh').set('Cookie', oldCookie);
@@ -188,8 +193,10 @@ describe('POST /api/auth/logout', () => {
       password: 'SecurePass123',
     });
 
-    const accessToken = signupRes.body.data.accessToken;
-    const cookie = signupRes.headers['set-cookie'];
+    const accessToken = signupRes.body.data && signupRes.body.data.accessToken;
+    let cookie = signupRes.headers['set-cookie'];
+    expect(cookie).toBeDefined();
+    if (Array.isArray(cookie)) cookie = cookie.join('; ');
 
     const res = await request(app)
       .post('/api/auth/logout')
